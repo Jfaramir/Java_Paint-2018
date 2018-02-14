@@ -19,15 +19,13 @@ import java.awt.image.BufferedImage;
 public class VentanaPaint extends javax.swing.JFrame {
 
     BufferedImage buffer, buffer2 = null; 
-    Circulo circulo;
-    Cuadrado cuadrado; 
-    Triangulo triangulo;
-    Pentagono pentagono;
-    Color colorSeleccionado = Color.BLACK; 
-    int formaSeleccionada = 0;  // si vale 0 pinto circulos
-                                // si vale 1 pinto cuadrados
-                                // si vale 2 pinto triangulos
+    Forma miForma;
     
+    Color colorSeleccionado = Color.BLACK; 
+    int formaSeleccionada = 3;  // si vale 100 pinto circulos
+                                // si vale 4 pinto cuadrados
+                                // si vale 3 pinto triangulos
+                                // si vale 5 pinto pentagonos
     Graphics2D bufferGraphics, buffer2Graphics, jPanelGraphics = null;
     
     /**
@@ -255,38 +253,28 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         bufferGraphics.drawImage(buffer2, 0, 0, null);
-        //dibujo la forma correspondiente 
-        switch (formaSeleccionada){
-            case 0: circulo.dibujate(bufferGraphics, evt.getX()); break;
-            case 1: cuadrado.dibujate(bufferGraphics, evt.getX()); break;
-            case 2: triangulo.dibujate(bufferGraphics, evt.getY()); break;
-            case 3: pentagono.dibujate(bufferGraphics, evt.getY()); break;
-        }        
+        miForma.dibujate(bufferGraphics, evt.getY());       
         repaint(0,0,1,1);      
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         //inicializo la forma que usaré para dibujar en el buffer
         switch (formaSeleccionada){
-            case 0: circulo = new Circulo(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
-                    break;
-            case 1: cuadrado = new Cuadrado(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
-                    break;
-            case 2: triangulo = new Triangulo(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
+            //case 0: circulo = new Circulo(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
+            //        break;
+            //case 1: cuadrado = new Cuadrado(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
+            //        break;
+            case 3: miForma = new Triangulo(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;       
-            case 3: pentagono = new Pentagono(evt.getX(), evt.getY(), 1,colorSeleccionado, jCheckBox1.isSelected()); 
+            case 5: miForma = new Pentagono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;
         }      
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
-         //dibujo la forma correspondiente 
-        switch (formaSeleccionada){
-            case 0: circulo.dibujate(buffer2Graphics, evt.getX()); break;
-            case 1: cuadrado.dibujate(buffer2Graphics, evt.getX()); break;
-            case 2: triangulo.dibujate(buffer2Graphics, evt.getY()); break;
-            case 3: pentagono.dibujate(buffer2Graphics, evt.getY()); break;
-        }    
+        //dibujo la forma correspondiente 
+            miForma.dibujate(buffer2Graphics, evt.getY()); 
+            
     }//GEN-LAST:event_jPanel1MouseReleased
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -324,14 +312,14 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     private void jToggleButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton4MousePressed
         //elige cuadrados
-        formaSeleccionada = 2;
+        formaSeleccionada = 3;
         jToggleButton1.setSelected(false);
         jToggleButton2.setSelected(false);
         jToggleButton3.setSelected(false);
     }//GEN-LAST:event_jToggleButton4MousePressed
 
     private void jToggleButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton5MousePressed
-        formaSeleccionada = 3;
+        formaSeleccionada = 5;
     }//GEN-LAST:event_jToggleButton5MousePressed
 
     /**
