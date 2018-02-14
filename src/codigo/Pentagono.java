@@ -16,28 +16,17 @@ public class Pentagono extends Polygon {
 
     public Color color = null;
     public boolean relleno = false;
+    //coordenadas del centro del pentagono
+    public int x = 0;
+    public int y = 0;
 
     public Pentagono(int _posX, int _posY, int _altura, Color _color, boolean _relleno) {
-        this.npoints = 5;
-                
-        
-        int radio = 40;
-        for (int i=0; i<4; i++){
-            this.xpoints[i] = (int) (140 + radio*Math.cos(2*Math.PI)*(i+40)/npoints);
-            this.ypoints[i] = (int) (320 + radio*Math.sin(2*Math.PI)*(i+40)/npoints);
-        }
-        
-        
-        int puntoX;
-        int puntoY;
-        
-        for (int i=4; i<5; i++){
-            puntoX = (int) (140 + radio*Math.cos(2*Math.PI)*(i+40)/npoints);
-            puntoY = (int) (320 + radio*Math.sin(2*Math.PI)*(i+40)/npoints);
-            addPoint(puntoX, puntoY);            
-        }
-        
-        
+        //inicializa el constructor del pentagono correctamente para q guarde tos los puntos
+        super(new int[5],new int[5],5); 
+        // guardo el centro del pentagono
+        this.x = _posX;
+        this.y = _posY;
+              
         
         color = _color;
         relleno = _relleno;
@@ -45,13 +34,23 @@ public class Pentagono extends Polygon {
 
     public void dibujate(Graphics2D g2, int _posY) {
         //redibujas el pentagono (TODO)
+        
                
-
+        calculaVertices( y - _posY);
+        
         g2.setColor(color);
         if (relleno) {
             g2.fill(this);
         } else {
             g2.draw(this);
         }
-    }
+    }    
+        //recalcula la posicion de los vertices de un triangulo regular
+        private void calculaVertices (int _radio){
+           for (int i=0; i<npoints; i++){
+            this.xpoints[i] = (int) (x + _radio*Math.cos(2*Math.PI*i/npoints));
+            this.ypoints[i] = (int) (y + _radio*Math.sin(2*Math.PI*i/npoints));
+        } 
+        }
+    
 }
