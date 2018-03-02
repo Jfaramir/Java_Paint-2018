@@ -5,6 +5,7 @@
  */
 package codigo;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -32,7 +33,7 @@ public class Forma extends Polygon {
         relleno = _relleno;
     }
     
-    public void dibujate(Graphics2D g2, int _posY, int _posX) {
+    public void dibujate(Graphics2D g2, int _posY, int _posX, BasicStroke _trazo) {
         //redibujas el triangulo
         
                
@@ -42,14 +43,15 @@ public class Forma extends Polygon {
         if (relleno) {
             g2.fill(this);
         } else {
+            g2.setStroke(_trazo);
             g2.draw(this);
         }
     }    
         //recalcula la posicion de los vertices de un triangulo regular
-        private void calculaVertices (int _radio, double _giro){
+        public void calculaVertices (int _radio, double _giro){
            for (int i=0; i<npoints; i++){
-            this.xpoints[i] = (int) (x + _radio * Math.cos((2 * Math.PI * i + _giro)/npoints));
-            this.ypoints[i] = (int) (y + _radio * Math.sin((2 * Math.PI * i + _giro)/npoints));
+            this.xpoints[i] = (int) (x + _radio * Math.cos((2 * Math.PI * i + _giro/40)/npoints));
+            this.ypoints[i] = (int) (y + _radio * Math.sin((2 * Math.PI * i + _giro/40)/npoints));
         } 
     }
 }

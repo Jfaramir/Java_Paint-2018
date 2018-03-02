@@ -13,10 +13,10 @@ import java.awt.geom.Rectangle2D;
  *
  * @author xp
  */
-public class Cuadrado extends Forma{
+public class linea extends Forma{
         
-    public Cuadrado(int _posX, int _posY, Color _color, boolean _relleno) {
+    public linea(int _posX, int _posY, Color _color, boolean _relleno) {
         //inicializa el constructor del cuadrado correctamente para q guarde tos los puntos
-        super(_posX, _posY, 4, _color, _relleno);
+        super(_posX, _posY, 2, _color, _relleno);
     }  
 }
