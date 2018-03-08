@@ -5,6 +5,8 @@
  */
 package codigo;
 
+//importamos todo lo necesario
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,12 +29,18 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     BufferedImage buffer, buffer2 = null; 
     Forma miForma;
-    
+    //ponemos un color por defecto
     Color colorSeleccionado = Color.BLACK; 
     int formaSeleccionada = 2;  // si vale 100 pinto circulos
                                 // si vale 4 pinto cuadrados
                                 // si vale 3 pinto triangulos
                                 // si vale 5 pinto pentagonos
+                                // si vale 6 pinto hexagonos
+                                // si vale 7 pinto heptagonos
+                                // si vale 8 pinto octogonos
+                                // si vale 1 pinto decagonos
+                                // si vale 10 pinto a mano alzada
+                                // si vale 11 borro
     Graphics2D bufferGraphics, buffer2Graphics, jPanelGraphics = null;
     
     BasicStroke trazo1 = new BasicStroke(15);
@@ -41,12 +49,12 @@ public class VentanaPaint extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPaint
      */
+    
+    
     private int x1;
     private int x2;
     private int y1;
     private int y2;
-    private double xOrigen;
-    private double yOrigen;
     private int selectCursor = -1;
     private Cursor cursorLapiz;
     private boolean flagPaint=false;
@@ -80,6 +88,7 @@ public class VentanaPaint extends javax.swing.JFrame {
         
     }
     private void deSelecciona(){
+        //esto es para deseleccionar el relleno
          Component[] components = (Component[]) getContentPane().getComponents();
          for (Component comp : components) {
              if (comp instanceof JToggleButton) {
@@ -472,7 +481,7 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         switch (formaSeleccionada) {
-            case 10:
+            case 10: // para dibujar la linea
                 x2 = evt.getX();
                 y2 = evt.getY();
                 if (x1 != x2 || y1 != y2) {
@@ -481,10 +490,9 @@ public class VentanaPaint extends javax.swing.JFrame {
                     
                     x1 = x2;
                     y1 = y2;
-                    //System.out.println(x1+" "+x2 + " " + y1 + "" + y2);
                 }
                 break;
-                case 11:
+                case 0: //para la goma
                 x2 = evt.getX();
                 y2 = evt.getY();
                 if (x1 != x2 || y1 != y2) {
@@ -493,10 +501,9 @@ public class VentanaPaint extends javax.swing.JFrame {
                     
                     x1 = x2;
                     y1 = y2;
-                    //System.out.println(x1+" "+x2 + " " + y1 + "" + y2);
                 }
                 break;
-            default:
+            default: // para el resto
                 bufferGraphics.drawImage(buffer2, 0, 0, null);
                 miForma.dibujate(bufferGraphics, evt.getY(), evt.getX(), new trazo(jSlider1.getValue()));
                 
@@ -514,31 +521,43 @@ public class VentanaPaint extends javax.swing.JFrame {
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         //inicializo la forma que usaré para dibujar en el buffer
         switch (formaSeleccionada){
+            //circulo
             case 100: miForma = new Circulo(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;
+            //cuadrado
             case 4: miForma = new Cuadrado(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;
+            //triangulo
             case 3: miForma = new Triangulo(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;       
+            //pentagono
             case 5: miForma = new Pentagono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                     break;
+            // estrella random
             case 24: miForma = new Estrella(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            //linea
             case 2: miForma = new linea(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            //hexagono
             case 6: miForma = new Hexagono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            //heptagono
             case 7: miForma = new Heptagono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            //decagono
             case 1: miForma = new Decagono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            // octogono
             case 8: miForma = new Octogono(evt.getX(), evt.getY(), colorSeleccionado, jCheckBox1.isSelected()); 
                 break;
+            // mano alzada
             case 10:
                 x1 = evt.getX();
                 y1 = evt.getY();
                 break;
-            case 11:
+            // borrar
+            case 0:
                 x1 = evt.getX();
                 y1 = evt.getY();
                 break;
@@ -552,9 +571,9 @@ public class VentanaPaint extends javax.swing.JFrame {
             
             switch (formaSeleccionada) {
             case 10:
-                buffer2Graphics.drawImage(buffer2, 0, 0, null);
+                buffer2Graphics.drawImage(buffer, 0, 0, null);
                 break;
-            case 11:
+            case 0:
                 buffer2Graphics.drawImage(buffer2, 0, 0, null);
                 break;
             default:
@@ -644,7 +663,7 @@ public class VentanaPaint extends javax.swing.JFrame {
         int seleccion = jFileChooser1.showOpenDialog(this);
         
         if (seleccion == JFileChooser.APPROVE_OPTION){
-            //si llego aqui es que el usuario ha pulsado en guardar cuando ha salido
+            //si llego aqui es que el usuario ha pulsado cargar cuando ha salido
             //el menu del jFileChooser
             File fichero = jFileChooser1.getSelectedFile();
             String nombre = fichero.getName();
@@ -715,7 +734,7 @@ public class VentanaPaint extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton12MousePressed
 
     private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
-        formaSeleccionada = 11;
+        formaSeleccionada = 0;
         deSelecciona();
     }//GEN-LAST:event_jButton3MousePressed
 
